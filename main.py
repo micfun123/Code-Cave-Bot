@@ -4,9 +4,10 @@ from os import listdir
 from os.path import isfile, join
 import os
 from dotenv import load_dotenv
-from PIL import Image, ImageDraw, ImageFont , ImageEnhance
 from datetime import datetime,time
+from rich.traceback import install
 
+install()
 
 load_dotenv()
 
