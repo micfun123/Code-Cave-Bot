@@ -6,13 +6,14 @@ __version__ = "0.0.1"
 __licence__ = "MIT License"
 __authors__ = ["micfun123", "fusionsid"]
 
+from asyncio import tasks
 import os
 import time
 import json
-
+from datetime import datetime,time
 import discord
-from discord.ext import commands
-
+from discord.ext import commands, tasks
+import random
 from dotenv import load_dotenv
 
 from rich.progress import Progress
@@ -65,6 +66,36 @@ class CodeCave(commands.Bot):
             command_prefix=self.config.prefix,
             allowed_mentions=allowed_mentions,
         )
+
+
+@commands.event
+async def on_ready():
+    # Setting `Playing ` status
+    print("we have powered on, I an alive.")
+    weekly_challenge.start()
+    
+@tasks.loop(time=time(10,00))
+async def weekly_challenge():
+    '''runs every day at 1PM UTC'''
+    
+    # check if the day is monday
+    today = datetime.utcnow().isoweekday()
+    if today == 5:  # Monday == 7
+        channel = client.get_channel(967975366482362428)
+        allmes = []
+        async for message in channel.history(limit=200):
+            allmes.append(message)
+        randoms = random.choice(allmes)
+        chennel2 = client.get_channel(967763538431082527)
+        em = discord.Embed(title=f"weekly challenge",color=0x00ff00)
+        em.description = "Its your favorite time of the week again!\n"
+        em.add_field(name="Challenge :", value=randoms.content)
+        msg = await channel.fetch_message(randoms.id)
+        print(msg.content)
+        await chennel2.send(embed=em)
+        await chennel2.send(f'<@&959429849804595230>')
+        await msg.delete()
+
 
 
 def start_bot(client):
