@@ -142,7 +142,7 @@ class WeeklyChallenge(commands.Cog):
             color=discord.Color.random(),
         )
         em.set_footer(text=f"Challenge suggested by {challenge[2]}")
-        await channel.send(content="<@977177042074366002>", embed=em)
+        await channel.send(content="<@&980462921740087336>", embed=em)
 
     # @commands.slash_command(name="challenge-suggest", description="Suggest a challenge")
     # async def challenge_suggest(self, ctx, suggestion: str = None):
