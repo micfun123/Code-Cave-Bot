@@ -226,6 +226,7 @@ class WeeklyChallenge(commands.Cog):
             return
 
     @commands.slash_command(name="list-challenges", description="Lists the challenges")
+    @commands.has_permissions(manage_guild=True)
     async def list_challenge_suggestions(self, ctx):
         async with aiosqlite.connect("main.db") as db:
             cur = await db.execute("SELECT * FROM Challenges WHERE accepted=1")
@@ -264,6 +265,7 @@ class WeeklyChallenge(commands.Cog):
     @commands.slash_command(
         name="challenge-delete", description="Delete a challenge suggestion"
     )
+    @commands.has_permissions(manage_guild=True)
     async def delete_challenge_command(self, ctx, id: int):
 
         async with aiosqlite.connect("main.db") as db:
